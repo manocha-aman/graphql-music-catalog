@@ -1,24 +1,15 @@
 import { ApolloServer } from "apollo-server";
-import { typeDefs } from "./schema";
-import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
-import { MusicAPI } from "./data-source";
-import { resolvers } from "./resolvers";
 
-export interface Context {
-  dataSources: DataSources;
-}
+import {ApolloGateway} from "@apollo/gateway";
 
-interface DataSources {
-  musicAPI: MusicAPI;
-}
-
+const gateway = new ApolloGateway({
+  serviceList:[
+    { name:"albums", url:"http://localhost:8001"},
+    { name:"artists", url:"http://localhost:8002"},
+  ]
+})
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources: () => ({
-    musicAPI: new MusicAPI(),
-  }),
-  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
+  gateway
 });
 
 server.listen().then(({ url }) => {

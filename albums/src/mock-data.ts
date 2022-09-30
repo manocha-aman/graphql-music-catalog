@@ -2,7 +2,7 @@ export const albums = [
   {
     id: "album-1",
     title: "1989",
-    artist: "1",
+    artist: "artist-1",
   },
   {
     id: "album-2",
