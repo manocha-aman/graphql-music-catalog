@@ -1,14 +1,21 @@
 import { Context } from "./app";
 import * as DataSourceTypes from "./data-source-types";
 import * as Schema from "./generated/graphql";
+import { Artist } from "./generated/graphql";
 
 export const resolvers = {
-  
+  Artist: {
+    albums: async (
+      artist: Artist,
+      _: any, 
+      { dataSources }: Context) => {
+      const albums = await dataSources.albumsAPI.getAlbums()
+      return albums.filter(album => album.artist === artist.id)
+    }
+  },
   Album: {
-    artist: (album:Schema.Album) => {
-      console.log(JSON.stringify(album.artist));
-
-      return {__typename:"Artist" , id:album.artist}
+    artist: (album: Schema.Album) => {
+      return { __typename: "Artist", id: album.artist }
     }
   },
   Query: {

@@ -21,6 +21,7 @@ export type Album = {
 
 export type Artist = {
   __typename?: 'Artist';
+  albums: Array<Maybe<Album>>;
   id: Scalars['ID'];
 };
 

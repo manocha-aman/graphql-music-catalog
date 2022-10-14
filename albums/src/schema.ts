@@ -8,7 +8,8 @@ export const typeDefs = gql`
   }
 
   extend type Artist @key(fields: "id") {
-    id: ID! @external
+    id: ID! @external,
+    albums:[Album]!
   }
 
   extend type Query {
